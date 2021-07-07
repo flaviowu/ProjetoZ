@@ -21,7 +21,7 @@ class Hospital:
     def __init__(self):
         self.name = "Hospital"
         self.item = "Remédio"
-        self.itemQ = randint(3)
+        self.itemQ = randint(1, 2)
 
     def getName(self):
         return self.name
@@ -37,7 +37,7 @@ class PoliceStation:
     def __init__(self):
         self.name = "Delegacia de Polícia"
         self.item = "Munição"
-        self.itemQ= randint(2)
+        self.itemQ= randint(1, 2)
 
     def getName(self):
         return self.name

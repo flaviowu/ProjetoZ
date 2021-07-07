@@ -80,7 +80,7 @@ class Survivor(Human):
     def goTo(self, newLocation):
         if self.energy > 0:
             self.setEnergy(-1)
-            self.location(newLocation.getName())
+            self.setLocation(newLocation)
         else:
             print(
                 "Você não tem energia para se locomover. Ao invés de gastar energia, você gastou 10 de vida")

@@ -41,8 +41,8 @@ class Ammo:
     def getQuantity(self):
         return self.quantity
 
-    def setQuantityUp(self):
-        self.quantity += 1
+    def setQuantityUp(self, v):
+        self.quantity += v
 
     def setQuantityDown(self):
         self.quantity -= 1

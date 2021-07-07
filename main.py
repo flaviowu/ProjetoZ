@@ -34,38 +34,40 @@ def luta(p):
                     p.escape()
                     break
 
-
 listaMenu = {"lugares": ["Mercado", "Hospital", "Delegacia de Polícia"],
-                "Ações": ["Ir para outro lugar", "Comer", "Se medicar", "Descansar", "Recarregar pistola", "Olhar Mochila"],
+                "Ações": ["Ir para outro lugar", "Comer", "Se medicar", "Descansar", "Recarregar pistola", "Olhar Mochila", "Sair"],
                 "Ações de Luta": ["Atacar", "Fugir"],
                 "Armas": ["Pistola", "Faca"]}
-
 personagem = personagens.Survivor(100, 10)
 lugar = location.Shelter()
 while personagem.days > 0 or personagem.life > 0:
+
     acao = menu(listaMenu["Ações"])
     if acao == "Ir para outro lugar":
         destino = menu(listaMenu["lugares"])
-        listaMenu["lugares"].append(personagem.getLocation())
+        listaMenu["lugares"].append(personagem.getLocation().getName())
         listaMenu["lugares"].remove(destino)
 
         if destino == "Mercado":
             lugar = location.Market()
-            personagem.setLocation(lugar)
+            personagem.goTo(lugar)
             personagem.getItens(lugar.getItemQ())
         elif destino == "Hospital":
             lugar = location.Hospital()
+            personagem.goTo(lugar)
             personagem.setLocation(lugar)
             personagem.getItens(lugar.getItemQ())
         elif destino == "Delegacia de Polícia":
             lugar = location.PoliceStation()
+            personagem.goTo(lugar)
             personagem.setLocation(lugar)
             personagem.getItens(lugar.getItemQ())
         elif destino == "Abrigo":
             lugar = location.Shelter()
+            personagem.goTo(lugar)
             personagem.setLocation(lugar)
+        listaMenu["lugares"].sort()
 
-        
     #     personagem.goTo()
     # elif acao == "Comer":
     #     personagem.eat()
@@ -77,10 +79,8 @@ while personagem.days > 0 or personagem.life > 0:
     #     personagem.backpack.pistola.reload()
     # elif acao == "Olhar Mochila":
     #     print(personagem.backpack)
-    
 
 
 # zumbi = personagens.Zombie(50, 20)
 print(personagem)
 print(personagem)
-
