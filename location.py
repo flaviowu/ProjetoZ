@@ -5,7 +5,7 @@ class Market:
     def __init__(self):
         self.name = "Mercado"
         self.item = "Comida"
-        self.itemQ = randint(1, 3)
+        self.itemQ = randint(1, 2)
 
     def getName(self):
         return self.name

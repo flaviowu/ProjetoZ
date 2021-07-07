@@ -27,7 +27,11 @@ class Human:
         return self.dmg
 
     def lifeUp(self, up):
-        self.life += up
+        if self.life <= 90:
+            self.life = self.lifeMax
+        elif 90 > self.life <= 100:
+            self.life += up
+        
 
     def lifeDown(self, down):
         self.life -= down
@@ -64,11 +68,19 @@ class Survivor(Human):
         self.energy += v
 
     def eat(self, v):
-        self.lifeUp(v)
-
-    def getMed(self):
-        self.setNonInfected()
-        itens.Medicine.quantity
+        if self.backpack.comida.getQuantity() > 0:
+            oldLife = self.getLife()
+            self.lifeUp(v)
+            self.backpack.comida.setQuantityDown()
+            print(f"Você comeu 1 un de comida e sua vida subiu em {self.getLife()-oldLife}")
+        else: print("Você não tem mais comida. Tente procurar em um mercado.")
+    
+    def getMedicine(self):
+        if self.backpack.remedio.getQuantity() > 0:
+            self.setNonInfected()
+            self.backpack.remedio.setQuantityDown()
+            print("Você tomou uma dose de Cloropina e deteve a infecção.")
+        else: print(f"Você tomou não tem mais doses de Cloropina.")
 
     def attack(self, enemy, weapon):
         if weapon == "Faca":
@@ -85,7 +97,7 @@ class Survivor(Human):
             print(
                 "Você não tem energia para se locomover. Ao invés de gastar energia, você gastou 10 de vida")
 
-    def getItens(self, qtd):
+    def pickUpItens(self, qtd):
         if self.location.getName() == "Mercado":
             self.backpack.comida.setQuantityUp(qtd)
         elif self.location.getName() == "Hospital":

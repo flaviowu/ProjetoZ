@@ -16,6 +16,19 @@ def menu(listaOpcoes):
                 "Escolha o número da opção dentre as do menu!\n-> ")
     return listaOpcoes[int(resposta) - 1]
 
+def inOutAcao(lista, p):
+    if p.getLocation().getName() != "Abrigo" and "Descansar" in lista :
+        lista.remove("Descansar")
+    elif personagem.getLocation().getName() == "Abrigo" and "Descansar" not in lista:
+        lista.insert(len(lista)-3, "Descansar")
+    else: pass
+
+def inOutLugares(lista, p, destino):
+    lista.remove(destino)
+    if p.getLocation().getName() not in lista:
+        lista.insert(2, p.getLocation().getName())
+    lista.sort()
+
 
 def luta(p):
     zumbi = personagens.Zombie()
@@ -35,52 +48,52 @@ def luta(p):
                     break
 
 listaMenu = {"lugares": ["Mercado", "Hospital", "Delegacia de Polícia"],
-                "Ações": ["Ir para outro lugar", "Comer", "Se medicar", "Descansar", "Recarregar pistola", "Olhar Mochila", "Sair"],
+                "Ações": ["Ir para outro lugar", "Comer", "Se medicar", "Recarregar pistola", "Olhar Mochila", "Sair"],
                 "Ações de Luta": ["Atacar", "Fugir"],
                 "Armas": ["Pistola", "Faca"]}
 personagem = personagens.Survivor(100, 10)
 lugar = location.Shelter()
 while personagem.days > 0 or personagem.life > 0:
-
+    print(personagem)
+    inOutAcao(listaMenu["Ações"], personagem)
     acao = menu(listaMenu["Ações"])
     if acao == "Ir para outro lugar":
         destino = menu(listaMenu["lugares"])
-        listaMenu["lugares"].append(personagem.getLocation().getName())
-        listaMenu["lugares"].remove(destino)
-
+        inOutLugares(listaMenu["lugares"], personagem, destino)
         if destino == "Mercado":
             lugar = location.Market()
             personagem.goTo(lugar)
-            personagem.getItens(lugar.getItemQ())
+            personagem.pickUpItens(lugar.getItemQ())
         elif destino == "Hospital":
             lugar = location.Hospital()
             personagem.goTo(lugar)
             personagem.setLocation(lugar)
-            personagem.getItens(lugar.getItemQ())
+            personagem.pickUpItens(lugar.getItemQ())
         elif destino == "Delegacia de Polícia":
             lugar = location.PoliceStation()
             personagem.goTo(lugar)
             personagem.setLocation(lugar)
-            personagem.getItens(lugar.getItemQ())
+            personagem.pickUpItens(lugar.getItemQ())
         elif destino == "Abrigo":
             lugar = location.Shelter()
             personagem.goTo(lugar)
             personagem.setLocation(lugar)
-        listaMenu["lugares"].sort()
-
-    #     personagem.goTo()
-    # elif acao == "Comer":
-    #     personagem.eat()
-    # elif acao == "Se medicar":
-    #     personagem.getMed()
+    elif acao == "Comer":
+        personagem.eat(personagem.backpack.comida.getValue())
+    elif acao == "Se medicar":
+        personagem.getMedicine()
+    elif acao == "Olhar Mochila":
+        print(personagem.backpack)
+    elif acao == "Sair":
+        break
+    
+    # 
     # elif acao == "Descansar":
     #     personagem.rest()
     # elif acao == "Recarregar Pistola":
     #     personagem.backpack.pistola.reload()
-    # elif acao == "Olhar Mochila":
-    #     print(personagem.backpack)
+    
 
 
 # zumbi = personagens.Zombie(50, 20)
-print(personagem)
-print(personagem)
+
