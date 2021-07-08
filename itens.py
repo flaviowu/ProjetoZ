@@ -54,6 +54,7 @@ class Ammo(Item):
 
 class Pistol:
     def __init__(self):
+        self.name = "Pistola"
         self.dmg = 2
         self.bullet = 1
 
@@ -62,7 +63,7 @@ class Pistol:
 
     def setBulletDown(self):
         if self.getBullet() <= 0:
-            self.setDmg(0)
+            pass
         else: self.bullet -= 1
     
     def setBulletUp(self):
@@ -79,9 +80,11 @@ class Pistol:
         self.setDmg(2)
 
     def shot(self):
-        if self.getBullet() <=0:
-            print("Quando você puxou o gatilho, nada acpnteceu. O zumbi só ficou mais furioso. e você percebeu que está sem balas.")
+        if self.getBullet() <= 0:
+            self.setDmg(0)
+            print("Quando você puxou o gatilho, nada aconteceu. O zumbi só ficou mais furioso. Você está sem balas!")
         else:
+            self.setDmg(2)
             self.setBulletDown()
 
 
@@ -103,3 +106,16 @@ class BackPack:
 
     def __str__(self):
         return f"Sua mochila tem:\n  Comida: {self.comida.getQuantity()} un\n  Medicamentos: {self.remedio.getQuantity()} un\n  1 Faca\n  1 Pistola\n  Munição: {self.ammo.getQuantity()} un\n"
+
+# municao = Ammo()
+# pistola = Pistol()
+# print(f"munição {municao.getQuantity()}")
+# municao.setQuantityDown()
+# print(f"Balas: {pistola.getBullet()}")
+# print(f"muniçao {municao.getQuantity()}")
+# pistola.shot()
+# print(f"Balas: {pistola.getBullet()}")
+# pistola.shot()
+# print(f"Balas: {pistola.getBullet()}")
+# pistola.reload()
+# print(f"Balas: {pistola.getBullet()}")

@@ -75,7 +75,8 @@ class Survivor(Human):
     def setEnergyDown(self):
         if self.getEnergy() <= 0:
             self.lifeDown(10)
-        else: self.energy -= 1
+        else:
+            self.energy -= 1
 
     def eat(self, v):
         if self.backpack.comida.getQuantity() > 0:
@@ -105,10 +106,13 @@ class Survivor(Human):
         enemy.lifeDown(self.dmg * dmgMod)
 
     def reloadGun(self):
-        print(f"Você pegou uma caixa de Munições e recarregou a pistola. Você tem agora {self.backpack.pistola.getBullet()} balas no pente.")
-        self.backpack.ammo.setQuantityDown()
-        self.backpack.pistola.reload()
-
+        if self.backpack.ammo.getQuantity() > 0:
+            self.backpack.ammo.setQuantityDown()
+            self.backpack.pistola.reload()
+            print(
+            f"Você pegou uma caixa de Munições e recarregou a pistola.\nVocê tem agora {self.backpack.pistola.getBullet()} balas no pente.")
+        else: print("Você está sem balas.\nTalvez você possa encontrar algumas caixas na Delegacia de Polícia.")
+    
     def goTo(self, newLocation):
         if self.energy > 0:
             self.setEnergyDown()
@@ -145,6 +149,7 @@ class Zombie(Human):
         self.life = life
         self.dmg = dmg
         self.alive = False
+
     def __str__(self):
         return f"Zumbi\nVida {self.life}"
 
@@ -152,16 +157,3 @@ class Zombie(Human):
         enemy.lifeDown(self.dmg)
         if choice([True, False]) == True:
             enemy.setInfected()
-
-
-# personagem = Survivor(100, 10)
-# zumbi = Zombie(50, 20)
-# i = 0
-# while personagem.isAlive() == True:
-#     i += 1
-#     print(f"Você foi atacado {i}x")
-#     zumbi.attack(personagem)
-#     personagem.attack(zumbi)
-#     print(f"Você: {personagem}")
-#     print(f"Zumbi: {zumbi}")
-#     print("--==")

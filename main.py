@@ -58,7 +58,7 @@ def luta(p, d):
           
 
 listaMenu = {"lugares": ["Mercado", "Hospital", "Delegacia de Polícia"],
-             "Ações": ["Ir para outro lugar", "Comer", "Se medicar", "Recarregar pistola", "Olhar Mochila", "Sair"],
+             "Ações": ["Ir para outro lugar", "Comer", "Se medicar", "Recarregar Pistola", "Olhar Mochila", "Sair"],
              "Ações de Luta": ["Atacar", "Fugir"],
              "Armas": ["Pistola", "Faca"]}
 personagem = personagens.Survivor(100, 10)
@@ -102,9 +102,7 @@ while personagem.days > 0 or personagem.life > 0:
     elif acao == "Sair":
         break
 
-    #
-    # elif acao == "Descansar":
-    #     personagem.rest()
+
 # print(personagem)
 # print(personagem.backpack)
 # personagem.reloadGun()
