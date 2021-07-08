@@ -113,10 +113,11 @@ class Survivor(Human):
 
     def reloadGun(self):
         if self.backpack.ammo.getQuantity() > 0:
-            print(f"Você pegou uma caixa de Munições e recarregou a pistola. Você tem agora {self.backpack.pistola.getBullet()} balas no pente.")
             self.backpack.ammo.setQuantityDown()
             self.backpack.pistola.reload()
-        else: print("Você revirou a mochila procurando pela sua munição, mas não achou nada.")
+            print(f"Você pegou uma caixa de Munições e recarregou a pistola. Você tem agora {self.backpack.pistola.getBullet()} balas no pente.")
+            
+        else: print("Você revirou a mochila procurando pela sua munição, mas não achou nada. Talvez vc deva dar uma procurada na Delegacia de Polícia")
 
     def goTo(self, newLocation):
         if self.energy > 0:

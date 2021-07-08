@@ -1,7 +1,26 @@
 import personagens
-import itens
 import location
 import random
+'''
+Recebemos sua mensagem e já triangulamos sua localização.
+Fique tranquilo que o resgate chegará em TRÊS (3) dias. Para sua informação, nossos drones fazem depósitos frequentes de comida no Mercado,
+medicamentos no Hospital e munições na Delegacia de Polícia. Se precisar de algum suprimento, não hesite em buscá-los. Economize sua energia e descanse para recuperá-la,
+pois o local onde
+você se encontra é muito radioativo e portanto, sua vida pode se esgotar rapidamente.
+Sobreviva!
+'''
+
+'''
+Infelizmente, você não sobreviveu até nossa equipe de resgate chegar.
+GAME OVER
+'''
+
+'''
+TUDUDUDUDUDUDUDUDUDUDUDU
+Você avistou um helicóptero e correu em direção a ele.
+O barulho das hélices do helicóptero atraiu uma horda de zumbis!
+Quando você se aproximava do helicóptero, um soldado jogou uma escada de corda...
+'''
 
 
 def menu(listaOpcoes):
