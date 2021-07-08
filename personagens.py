@@ -57,8 +57,14 @@ class Survivor(Human):
         self.days = 3
         self.backpack = itens.BackPack()
 
-    def __str__(self):
-        return f"Vida {self.life}\nEnergia {self.energy}\nInfecção: {self.infected}\nPistola {self.backpack.pistola.getBullet()}\nLocal Atual: {self.getLocation().getName()}"
+    def getStatus(self):
+        print("-=-"*10)
+        print("> Player Status:")
+        print(f"{'> Vida': <15}{self.life}")
+        print(f"{'> Infecção': <15}{'Saudável' if self.infected == False else 'Infectado'}")
+        print(f"{'> Pistola': <15}{self.backpack.pistola.getBullet()} Bala(s)")
+        print(f"{'> Local Atual': <15}{self.getLocation().getName()}")
+        print("-=-"*10)
 
     def setLocation(self, newLocation):
         self.location = newLocation
@@ -105,9 +111,11 @@ class Survivor(Human):
         enemy.lifeDown(self.dmg * dmgMod)
 
     def reloadGun(self):
-        print(f"Você pegou uma caixa de Munições e recarregou a pistola. Você tem agora {self.backpack.pistola.getBullet()} balas no pente.")
-        self.backpack.ammo.setQuantityDown()
-        self.backpack.pistola.reload()
+        if self.backpack.ammo.getQuantity() > 0:
+            print(f"Você pegou uma caixa de Munições e recarregou a pistola. Você tem agora {self.backpack.pistola.getBullet()} balas no pente.")
+            self.backpack.ammo.setQuantityDown()
+            self.backpack.pistola.reload()
+        else: print("Você revirou a mochila procurando pela sua munição, mas não achou nada.")
 
     def goTo(self, newLocation):
         if self.energy > 0:
@@ -122,7 +130,7 @@ class Survivor(Human):
     def pickUpItens(self, qtd):
         if self.location.getName() == "Mercado":
             self.backpack.comida.setQuantityUp(qtd)
-            print(f"Você encontrou {qtd} item(s) de comida.")
+            print(f"Você encontrou {qtd} un de comida.")
         elif self.location.getName() == "Hospital":
             self.backpack.remedio.setQuantityUp(qtd)
             print(f"Você encontrou {qtd} un de Cloropina.")
@@ -135,8 +143,9 @@ class Survivor(Human):
 
     def rest(self):
         self.setEnergyUp()
-        self.lifeDown(choice([35, 40]))
-        print("Você dormiu por 8h e recuperou energia máxima (3 pontos).")
+        oldLife = self.getLife()
+        self.lifeDown(choice([10, 20]))
+        print(f"Você dormiu por 8h e recuperou energia máxima (3 pontos), porém, devido à radiação, você perdeu {oldLife - self.getLife()}.")
 
 
 class Zombie(Human):
@@ -145,8 +154,13 @@ class Zombie(Human):
         self.life = life
         self.dmg = dmg
         self.alive = False
-    def __str__(self):
-        return f"Zumbi\nVida {self.life}"
+
+    def getStatus(self):
+        print("-=-"*10)
+        print("> Zombie Status:")
+        print(f"{'> Vida': <15}{self.life}")
+        print("-=-"*10)
+
 
     def attack(self, enemy):
         enemy.lifeDown(self.dmg)
@@ -155,6 +169,7 @@ class Zombie(Human):
 
 
 # personagem = Survivor(100, 10)
+# personagem.getStatus()
 # zumbi = Zombie(50, 20)
 # i = 0
 # while personagem.isAlive() == True:

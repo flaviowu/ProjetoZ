@@ -61,6 +61,7 @@ class Pistol:
         return self.bullet
 
     def setBulletDown(self):
+        print("Você não tem mais balas.")
         if self.getBullet() <= 0:
             self.setDmg(0)
         else: self.bullet -= 1
@@ -80,7 +81,7 @@ class Pistol:
 
     def shot(self):
         if self.getBullet() <=0:
-            print("Quando você puxou o gatilho, nada acpnteceu. O zumbi só ficou mais furioso. e você percebeu que está sem balas.")
+            print("Quando você puxou o gatilho, nada aconteceu.")
         else:
             self.setBulletDown()
 

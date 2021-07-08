@@ -5,11 +5,13 @@ import random
 
 
 def menu(listaOpcoes):
+    print("-=-=-=-=-=-= Menu =-=-=-=-=-=-")
     opcoes = enumerate(listaOpcoes, 1)
     for i, v in opcoes:
         print(f"[{i}] - {v}")
     resposta = ""
     while resposta.isnumeric() == False:
+        print("-=-"*10)
         resposta = input("Escolha o número da opção\n-> ")
         while resposta.isnumeric() == True and int(resposta) not in list(range(1, len(listaOpcoes)+1)):
             resposta = input(
@@ -40,31 +42,31 @@ def luta(p, d):
     while n > 0:
         n -= 1
         while zumbi.life > 0 and p.life > 0:
-            iniciativa = random.randint(1,20)
-            print(p)
-            print(zumbi)
-            if iniciativa >= 10:
-                print("Um zumbi te atacou!")
-                zumbi.attack(p)
-                print("=-"*25)
-            elif iniciativa < 10:
-                acao = menu(listaMenu["Ações de Luta"])
-                if acao == "Atacar":
-                    arma = menu(listaMenu["Armas"])
-                    p.attack(zumbi, arma)
-                elif acao == "Fugir":
-                    p.escape()
-                    break
+            # iniciativa = random.randint(1,20)
+            p.getStatus()
+            zumbi.getStatus()
+            # if iniciativa >= 10:
+            print("Um zumbi te atacou!")
+            zumbi.attack(p)
+            #     print("=-"*25)
+            # elif iniciativa < 10:
+            acao = menu(listaMenu["Ações de Luta"])
+            if acao == "Atacar":
+                arma = menu(listaMenu["Armas"])
+                p.attack(zumbi, arma)
+            elif acao == "Fugir":
+                p.escape()
+                break
           
 
 listaMenu = {"lugares": ["Mercado", "Hospital", "Delegacia de Polícia"],
-             "Ações": ["Ir para outro lugar", "Comer", "Se medicar", "Recarregar pistola", "Olhar Mochila", "Sair"],
+             "Ações": ["Ir para outro lugar", "Comer", "Se medicar", "Recarregar Pistola", "Olhar Mochila", "Sair"],
              "Ações de Luta": ["Atacar", "Fugir"],
              "Armas": ["Pistola", "Faca"]}
 personagem = personagens.Survivor(100, 10)
 lugar = location.Shelter()
 while personagem.days > 0 or personagem.life > 0:
-    print(personagem)
+    personagem.getStatus()
     inOutAcao(listaMenu["Ações"], personagem)
     acao = menu(listaMenu["Ações"])
     if acao == "Ir para outro lugar":
