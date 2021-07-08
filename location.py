@@ -37,7 +37,7 @@ class PoliceStation:
     def __init__(self):
         self.name = "Delegacia de Polícia"
         self.item = "Munição"
-        self.itemQ= randint(1, 2)
+        self.itemQ = randint(1, 2)
 
     def getName(self):
         return self.name
@@ -47,6 +47,7 @@ class PoliceStation:
 
     def getItemQ(self):
         return self.itemQ
+
 
 class Shelter:
     def __init__(self):

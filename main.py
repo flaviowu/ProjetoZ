@@ -1,7 +1,7 @@
 import personagens
 import itens
 import location
-from random import randint, choice
+import random
 
 
 def menu(listaOpcoes):
@@ -16,12 +16,15 @@ def menu(listaOpcoes):
                 "Escolha o número da opção dentre as do menu!\n-> ")
     return listaOpcoes[int(resposta) - 1]
 
+
 def inOutAcao(lista, p):
-    if p.getLocation().getName() != "Abrigo" and "Descansar" in lista :
+    if p.getLocation().getName() != "Abrigo" and "Descansar" in lista:
         lista.remove("Descansar")
     elif personagem.getLocation().getName() == "Abrigo" and "Descansar" not in lista:
         lista.insert(len(lista)-3, "Descansar")
-    else: pass
+    else:
+        pass
+
 
 def inOutLugares(lista, p, destino):
     lista.remove(destino)
@@ -30,27 +33,34 @@ def inOutLugares(lista, p, destino):
     lista.sort()
 
 
-def luta(p):
-    zumbi = personagens.Zombie()
-    n = randint(1, 3)
+def luta(p, d):
+    zumbi = personagens.Zombie(random.choice([20, 40, 60]), random.choice([1, 5, 10]))
+    n = random.randint(1, 3)
+    print(f"No caminho até o(a) {d}, você encontrou {n} zumbis! Se prepare para lutar pela sua vida!\n")
     while n > 0:
+        n -= 1
         while zumbi.life > 0 and p.life > 0:
-            iniciativa = randint(1)
-            if iniciativa == 1:
+            iniciativa = random.randint(1,20)
+            print(p)
+            print(zumbi)
+            if iniciativa >= 10:
+                print("Um zumbi te atacou!")
                 zumbi.attack(p)
-            else:
+                print("=-"*25)
+            elif iniciativa < 10:
                 acao = menu(listaMenu["Ações de Luta"])
-                if acao == "atacar":
+                if acao == "Atacar":
                     arma = menu(listaMenu["Armas"])
                     p.attack(zumbi, arma)
                 elif acao == "Fugir":
                     p.escape()
                     break
+          
 
 listaMenu = {"lugares": ["Mercado", "Hospital", "Delegacia de Polícia"],
-                "Ações": ["Ir para outro lugar", "Comer", "Se medicar", "Recarregar pistola", "Olhar Mochila", "Sair"],
-                "Ações de Luta": ["Atacar", "Fugir"],
-                "Armas": ["Pistola", "Faca"]}
+             "Ações": ["Ir para outro lugar", "Comer", "Se medicar", "Recarregar pistola", "Olhar Mochila", "Sair"],
+             "Ações de Luta": ["Atacar", "Fugir"],
+             "Armas": ["Pistola", "Faca"]}
 personagem = personagens.Survivor(100, 10)
 lugar = location.Shelter()
 while personagem.days > 0 or personagem.life > 0:
@@ -60,6 +70,7 @@ while personagem.days > 0 or personagem.life > 0:
     if acao == "Ir para outro lugar":
         destino = menu(listaMenu["lugares"])
         inOutLugares(listaMenu["lugares"], personagem, destino)
+        luta(personagem, destino)
         if destino == "Mercado":
             lugar = location.Market()
             personagem.goTo(lugar)
@@ -84,16 +95,22 @@ while personagem.days > 0 or personagem.life > 0:
         personagem.getMedicine()
     elif acao == "Olhar Mochila":
         print(personagem.backpack)
+    elif acao == "Descansar":
+        personagem.rest()
+    elif acao == "Recarregar Pistola":
+        personagem.reloadGun()
     elif acao == "Sair":
         break
-    
-    # 
+
+    #
     # elif acao == "Descansar":
     #     personagem.rest()
-    # elif acao == "Recarregar Pistola":
-    #     personagem.backpack.pistola.reload()
-    
+# print(personagem)
+# print(personagem.backpack)
+# personagem.reloadGun()
+# print(personagem)
+# print(personagem.backpack)
+
 
 
 # zumbi = personagens.Zombie(50, 20)
-

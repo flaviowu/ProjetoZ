@@ -3,7 +3,6 @@ class Item:
         self.name = ""
         self.value = 0
         self.quantity = 0
-        self.Qmod = 1
 
     def getName(self):
         return self.name
@@ -25,12 +24,9 @@ class Item:
 
     def setQuantityDown(self):
         if self.quantity <= 0:
-            self.quantity = 0
-            self.Qmod = 0
+            pass
         else:
             self.quantity -= 1
-            self.Qmod = 1
-
 
 
 class Food(Item):
@@ -59,27 +55,34 @@ class Ammo(Item):
 class Pistol:
     def __init__(self):
         self.dmg = 2
-        self.bullet = 6
+        self.bullet = 1
 
     def getBullet(self):
-        return self.quantity
+        return self.bullet
 
+    def setBulletDown(self):
+        if self.getBullet() <= 0:
+            self.setDmg(0)
+        else: self.bullet -= 1
+    
+    def setBulletUp(self):
+        self.bullet = 6
+ 
     def getDmg(self):
         return self.dmg
-
+    
+    def setDmg(self, v):
+        self.dmg = v
+    
     def reload(self):
-        self.quantity = 6
-        Ammo.setQuantityDown(1)
-        self.dmg = 2
-        print(f"Você recarregou sua pistola.\nConsumiu 1 un de Munição e tem agora 6 balas no pente.")
+        self.setBulletUp()
+        self.setDmg(2)
 
     def shot(self):
-
-        if self.quantity <= 0:
-            self.dmg = 0
-            self.quantity = 0
+        if self.getBullet() <=0:
+            print("Quando você puxou o gatilho, nada acpnteceu. O zumbi só ficou mais furioso. e você percebeu que está sem balas.")
         else:
-            self.quantity -= 1
+            self.setBulletDown()
 
 
 class Knife:
@@ -99,13 +102,4 @@ class BackPack:
         self.ammo = Ammo()
 
     def __str__(self):
-        return f"Sua mochila tem:\n  Comida: {self.getComidaQ()} un\n  Medicamentos: {self.getMedicineQ()} un\n  1 Faca\n  1 Pistola\n  Munição: {self.getAmmoQ()} un\n"
-
-    def getComidaQ(self):
-        return self.comida.getQuantity()
-
-    def getMedicineQ(self):
-        return self.remedio.getQuantity()
-
-    def getAmmoQ(self):
-        return self.ammo.getQuantity()
+        return f"Sua mochila tem:\n  Comida: {self.comida.getQuantity()} un\n  Medicamentos: {self.remedio.getQuantity()} un\n  1 Faca\n  1 Pistola\n  Munição: {self.ammo.getQuantity()} un\n"
