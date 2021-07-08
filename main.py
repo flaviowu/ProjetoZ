@@ -104,9 +104,7 @@ while personagem.days > 0 or personagem.life > 0:
     elif acao == "Sair":
         break
 
-    #
-    # elif acao == "Descansar":
-    #     personagem.rest()
+
 # print(personagem)
 # print(personagem.backpack)
 # personagem.reloadGun()

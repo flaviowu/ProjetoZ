@@ -81,7 +81,8 @@ class Survivor(Human):
     def setEnergyDown(self):
         if self.getEnergy() <= 0:
             self.lifeDown(10)
-        else: self.energy -= 1
+        else:
+            self.energy -= 1
 
     def eat(self, v):
         if self.backpack.comida.getQuantity() > 0:
@@ -155,6 +156,7 @@ class Zombie(Human):
         self.dmg = dmg
         self.alive = False
 
+
     def getStatus(self):
         print("-=-"*10)
         print("> Zombie Status:")
@@ -162,11 +164,11 @@ class Zombie(Human):
         print("-=-"*10)
 
 
+
     def attack(self, enemy):
         enemy.lifeDown(self.dmg)
         if choice([True, False]) == True:
             enemy.setInfected()
-
 
 # personagem = Survivor(100, 10)
 # personagem.getStatus()
