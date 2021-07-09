@@ -4,6 +4,7 @@ class Item:             # classe item genérico
         self.value = 0
         self.quantity = 0
 
+
     def getName(self):
         return self.name
 
@@ -14,7 +15,7 @@ class Item:             # classe item genérico
             pass
 
     def getValue(self):
-        return self.value * self.Qmod
+        return self.value
 
     def getQuantity(self):
         return self.quantity
