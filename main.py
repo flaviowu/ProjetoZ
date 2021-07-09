@@ -3,6 +3,8 @@ import location
 import random
 
 # função para printar qualquer menu recebendo uma lista, pedindo input da escolha e devolvendo uam str com a escolha
+
+
 def menu(listaOpcoes):
     print("-=-=-=-=-=-= Menu =-=-=-=-=-=-")
     opcoes = enumerate(listaOpcoes, 1)
@@ -18,6 +20,8 @@ def menu(listaOpcoes):
     return listaOpcoes[int(resposta) - 1]
 
 # tira a ação descansar se o personagem estiver fora do abrigo e coloca de volta se estiver de volta ao abrigo
+
+
 def inOutAcao(lista, p):
     if p.getLocation().getName() != "Abrigo" and "Descansar" in lista:
         lista.remove("Descansar")
@@ -27,6 +31,8 @@ def inOutAcao(lista, p):
         pass
 
 # tira da lista de opções de destino o lugar atual do personagem
+
+
 def inOutLugares(lista, p, destino):
     lista.remove(destino)
     if p.getLocation().getName() not in lista:
@@ -34,6 +40,8 @@ def inOutLugares(lista, p, destino):
     lista.sort()
 
 # função script de luta: no caminho, o personagem encontra um número aleatório de zumbis com paramentros aleatórios.
+
+
 def luta(p, d):
     zumbi = personagens.Zombie(random.choice(
         [20, 40, 60]), random.choice([20, 25, 30]))
@@ -60,7 +68,8 @@ def luta(p, d):
                 p.escape()
                 break
 
-# dicionário de lista de lugares,, ações, ações durante a luta e armas. 
+
+# dicionário de lista de lugares,, ações, ações durante a luta e armas.
 listaMenu = {"lugares": ["Mercado", "Hospital", "Delegacia de Polícia"],
              "Ações": ["Ir para outro lugar", "Comer", "Se medicar", "Recarregar Pistola", "Olhar Mochila", "Sair"],
              "Ações de Luta": ["Atacar", "Fugir"],
@@ -85,14 +94,16 @@ while mainFlag:
 
 # início do loop in Game
 personagem = personagens.Survivor(100, 10)  # instacioação do personagem
-lugar = location.Shelter()                  # instanciação do lugar inicial = Abrigo
+# instanciação do lugar inicial = Abrigo
+lugar = location.Shelter()
 while personagem.getDia() > 0 and personagem.getLife() > 0 and runFlag == True:
     personagem.getStatus()
     inOutAcao(listaMenu["Ações"], personagem)
-    acao = menu(listaMenu["Ações"])                 # pede função menu principal de ações
+    # pede função menu principal de ações
+    acao = menu(listaMenu["Ações"])
     if acao == "Ir para outro lugar":               # ação Ir para outro lugar
         destino = menu(listaMenu["lugares"])
-        inOutLugares(listaMenu["lugares"], personagem, destino)  
+        inOutLugares(listaMenu["lugares"], personagem, destino)
         luta(personagem, destino)
         if destino == "Mercado":
             lugar = location.Market()
@@ -129,7 +140,7 @@ if personagem.getDia() == 0:
     print(f"TUDUDUDUDUDUDUDUDUDUDUDU\nVocê avistou um helicóptero e correu em direção a ele.\nO barulho das hélices do helicóptero atraiu uma horda de zumbis!!\nQuando você se aproximava do helicóptero, um soldado jogou uma escada de corda e você subiu por ela e foi RESGATADO!\nParabéns, você sobreviveu ao apocalipse por enquanto, mas a aventura está só começando.")
 elif personagem.getLife() == 0:
     print(f"Infelizmente, você não sobreviveu até a equipe de resgate chegar.\nGAME OVER.")
-elif (personagem.getDia() > 0 and personagem.getLife() > 0) or runFlag ==False:
+elif (personagem.getDia() > 0 and personagem.getLife() > 0) or runFlag == False:
     print(f"Volte mais vezes!")
 
 

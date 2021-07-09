@@ -4,7 +4,6 @@ class Item:             # classe item genérico
         self.value = 0
         self.quantity = 0
 
-
     def getName(self):
         return self.name
 
@@ -65,24 +64,24 @@ class Pistol:
     def setBulletDown(self):
         if self.getBullet() <= 0:
             pass
-        else: self.bullet -= 1
+        else:
+            self.bullet -= 1
 
-    
     def setBulletUp(self):
         self.bullet = 6
- 
+
     def getDmg(self):
         return self.dmg
-    
+
     def setDmg(self, v):
         self.dmg = v
-    
+
     def reload(self):
         self.setBulletUp()
         self.setDmg(2)
 
     def shot(self):
-        if self.getBullet() <=0:
+        if self.getBullet() <= 0:
             self.setDmg(0)
             print(f"Quando você puxou o gatilho, nada aconteceu.\n")
             print(f"Você não tem mais balas.\n")
