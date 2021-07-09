@@ -59,6 +59,7 @@ class Survivor(Human):
 
     def getStatus(self):
         print("-=-"*10)
+        print(f"Faltam {self.getDia()} {'dia' if self.getDia == 1 else 'dias'} para o resgate.")
         print("> Player Status:")
         print(f"{'> Vida': <15}{self.life}")
         print(f"{'> Infecção': <15}{'Saudável' if self.infected == False else 'Infectado'}")
@@ -90,64 +91,74 @@ class Survivor(Human):
             self.lifeUp(v)
             self.backpack.comida.setQuantityDown()
             print(
-                f"Você comeu 1 un de comida e sua vida subiu em {self.getLife()-oldLife}")
+                f"Você comeu 1 un de comida e sua vida subiu em {self.getLife()-oldLife}\n")
         else:
-            print("Você não tem mais comida. Tente procurar em um mercado.")
+            print(f"Você não tem mais comida. Tente procurar em um mercado.\n")
 
     def getMedicine(self):
         if self.backpack.remedio.getQuantity() > 0:
             self.setNonInfected()
             self.backpack.remedio.setQuantityDown()
-            print("Você tomou uma dose de Cloropina e deteve a infecção.")
+            print(f"Você tomou uma dose de Cloropina e deteve a infecção.\n")
         else:
-            print(f"Você tomou não tem mais doses de Cloropina.")
+            print(f"Você tomou não tem mais doses de Cloropina.\n")
 
     def attack(self, enemy, weapon):
+        oldLife = enemy.getLife()
         if weapon == "Faca":
             dmgMod = self.backpack.faca.getDmg()
         elif weapon == "Pistola":
             dmgMod = self.backpack.pistola.getDmg()
-            print("Você pegou sua arma, apontou para o zumbi e puxou o gatilho.")
-            self.backpack.pistola.shot()
+            print(f"Você pegou sua arma, apontou para o zumbi e puxou o gatilho.\n")
+            self.backpack.pistola.shot()    
         enemy.lifeDown(self.dmg * dmgMod)
+        newLife = enemy.getLife()
+        print(f"O zumbi perdeu {oldLife - newLife} pontos de vida\n")
 
     def reloadGun(self):
         if self.backpack.ammo.getQuantity() > 0:
             self.backpack.ammo.setQuantityDown()
             self.backpack.pistola.reload()
-            print(f"Você pegou uma caixa de Munições e recarregou a pistola. Você tem agora {self.backpack.pistola.getBullet()} balas no pente.")
+            print(f"Você pegou uma caixa de Munições e recarregou a pistola. Você tem agora {self.backpack.pistola.getBullet()} balas no pente.\n")
             
-        else: print("Você revirou a mochila procurando pela sua munição, mas não achou nada. Talvez vc deva dar uma procurada na Delegacia de Polícia")
+        else: print(f"Você revirou a mochila procurando pela sua munição, mas não achou nada. Talvez vc deva dar uma procurada na Delegacia de Polícia\n")
 
     def goTo(self, newLocation):
         if self.energy > 0:
             self.setEnergyDown()
             self.setLocation(newLocation)
-            print(f"Você chegou ao seu destino e gastou 1 ponto de energia.")
+            print(f"Você chegou ao seu destino e gastou 1 ponto de energia.\n")
         else:
             self.setEnergyDown()
             print(
-                "Você não tem energia para se locomover. Ao invés de gastar energia, você gastou 10 de vida")
+                f"Você não tem energia para se locomover. Ao invés de gastar energia, você gastou 10 de vida\n")
 
     def pickUpItens(self, qtd):
         if self.location.getName() == "Mercado":
             self.backpack.comida.setQuantityUp(qtd)
-            print(f"Você encontrou {qtd} un de comida.")
+            print(f"Você encontrou {qtd} und de comida.\n")
         elif self.location.getName() == "Hospital":
             self.backpack.remedio.setQuantityUp(qtd)
-            print(f"Você encontrou {qtd} un de Cloropina.")
+            print(f"Você encontrou {qtd} und de Cloropina.\n")
         elif self.location.getName() == "Delegacia de Polícia":
             self.backpack.ammo.setQuantityUp(qtd)
-            print(f"Você encontrou {qtd} caixa(s) de munição.")
+            print(f"Você encontrou {qtd} caixa(s) de munição.\n")
 
     def escape(self):
         self.setEnergyDown()
 
+    def passaDia(self):
+        self.days -= 1
+
+    def getDia(self):
+        return self.days
+
     def rest(self):
         self.setEnergyUp()
         oldLife = self.getLife()
-        self.lifeDown(choice([10, 20]))
-        print(f"Você dormiu por 8h e recuperou energia máxima (3 pontos), porém, devido à radiação, você perdeu {oldLife - self.getLife()}.")
+        self.passaDia()
+        self.lifeDown(choice([30, 40, 50]))
+        print(f"Você dormiu a acordou no dia seguinte.\nRecuperou energia máxima (3 pontos), porém, devido à radiação, você perdeu {oldLife - self.getLife()} pontos de vida.\n")
 
 
 class Zombie(Human):
@@ -167,9 +178,12 @@ class Zombie(Human):
 
 
     def attack(self, enemy):
+        oldLife = enemy.getLife()
         enemy.lifeDown(self.dmg)
-        if choice([True, False]) == True:
+        print(f"Você foi atacado pelo zumbi e perdeu {oldLife - enemy.getLife()} pontos de vida.\n")
+        if enemy.isInfected == False and choice([True, False]) == True:
             enemy.setInfected()
+            print("Você foi infectado! Tome uma dose de Cloropina assim que possível.\n")
 
 # personagem = Survivor(100, 10)
 # personagem.getStatus()

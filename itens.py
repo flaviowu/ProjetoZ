@@ -62,10 +62,10 @@ class Pistol:
         return self.bullet
 
     def setBulletDown(self):
-        print("Você não tem mais balas.")
         if self.getBullet() <= 0:
             pass
         else: self.bullet -= 1
+
     
     def setBulletUp(self):
         self.bullet = 6
@@ -82,7 +82,9 @@ class Pistol:
 
     def shot(self):
         if self.getBullet() <=0:
-            print("Quando você puxou o gatilho, nada aconteceu.")
+            self.setDmg(0)
+            print(f"Quando você puxou o gatilho, nada aconteceu.\n")
+            print(f"Você não tem mais balas.\n")
         else:
             self.setDmg(2)
             self.setBulletDown()
@@ -105,7 +107,7 @@ class BackPack:
         self.ammo = Ammo()
 
     def __str__(self):
-        return f"Sua mochila tem:\n  Comida: {self.comida.getQuantity()} un\n  Medicamentos: {self.remedio.getQuantity()} un\n  1 Faca\n  1 Pistola\n  Munição: {self.ammo.getQuantity()} un\n"
+        return f"Sua mochila tem:\n  Comida: {self.comida.getQuantity()} un\n  Medicamentos: {self.remedio.getQuantity()} un\n  1 Faca\n  1 Pistola\n  Munição: {self.ammo.getQuantity()} und\n"
 
 # municao = Ammo()
 # pistola = Pistol()
