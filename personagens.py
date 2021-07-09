@@ -3,7 +3,7 @@ import itens
 import location
 
 
-class Human:
+class Human:                                # classe Human para personagem genérico
     def __init__(self, life=100, dmg=1):
         self.life = life
         self.lifeMax = 100
@@ -49,7 +49,7 @@ class Human:
         self.alive = False
 
 
-class Survivor(Human):
+class Survivor(Human):                  # subclasse Human que herda parametros e funções de Human
     def __init__(self, life, dmg):
         super().__init__(life=life, dmg=dmg)
         self.location = location.Shelter()
@@ -57,12 +57,14 @@ class Survivor(Human):
         self.days = 3
         self.backpack = itens.BackPack()
 
-    def getStatus(self):
+    def getStatus(self):  # printa status do personagem
         print("-=-"*10)
-        print(f"Faltam {self.getDia()} {'dia' if self.getDia == 1 else 'dias'} para o resgate.")
+        print(
+            f"Faltam {self.getDia()} {'dia' if self.getDia == 1 else 'dias'} para o resgate.")
         print("> Player Status:")
         print(f"{'> Vida': <15}{self.life}")
-        print(f"{'> Infecção': <15}{'Saudável' if self.infected == False else 'Infectado'}")
+        print(
+            f"{'> Infecção': <15}{'Saudável' if self.infected == False else 'Infectado'}")
         print(f"{'> Pistola': <15}{self.backpack.pistola.getBullet()} Bala(s)")
         print(f"{'> Local Atual': <15}{self.getLocation().getName()}")
         print("-=-"*10)
@@ -110,7 +112,7 @@ class Survivor(Human):
         elif weapon == "Pistola":
             dmgMod = self.backpack.pistola.getDmg()
             print(f"Você pegou sua arma, apontou para o zumbi e puxou o gatilho.\n")
-            self.backpack.pistola.shot()    
+            self.backpack.pistola.shot()
         enemy.lifeDown(self.dmg * dmgMod)
         newLife = enemy.getLife()
         print(f"O zumbi perdeu {oldLife - newLife} pontos de vida\n")
@@ -119,9 +121,11 @@ class Survivor(Human):
         if self.backpack.ammo.getQuantity() > 0:
             self.backpack.ammo.setQuantityDown()
             self.backpack.pistola.reload()
-            print(f"Você pegou uma caixa de Munições e recarregou a pistola. Você tem agora {self.backpack.pistola.getBullet()} balas no pente.\n")
-            
-        else: print(f"Você revirou a mochila procurando pela sua munição, mas não achou nada. Talvez vc deva dar uma procurada na Delegacia de Polícia\n")
+            print(
+                f"Você pegou uma caixa de Munições e recarregou a pistola. Você tem agora {self.backpack.pistola.getBullet()} balas no pente.\n")
+
+        else:
+            print(f"Você revirou a mochila procurando pela sua munição, mas não achou nada. Talvez vc deva dar uma procurada na Delegacia de Polícia\n")
 
     def goTo(self, newLocation):
         if self.energy > 0:
@@ -158,16 +162,16 @@ class Survivor(Human):
         oldLife = self.getLife()
         self.passaDia()
         self.lifeDown(choice([30, 40, 50]))
-        print(f"Você dormiu a acordou no dia seguinte.\nRecuperou energia máxima (3 pontos), porém, devido à radiação, você perdeu {oldLife - self.getLife()} pontos de vida.\n")
+        print(
+            f"Você dormiu a acordou no dia seguinte.\nRecuperou energia máxima (3 pontos), porém, devido à radiação, você perdeu {oldLife - self.getLife()} pontos de vida.\n")
 
 
-class Zombie(Human):
+class Zombie(Human):                # classe zumbi derivada de human
     def __init__(self, life, dmg):
         super().__init__(life=life, dmg=dmg)
         self.life = life
         self.dmg = dmg
         self.alive = False
-
 
     def getStatus(self):
         print("-=-"*10)
@@ -175,25 +179,11 @@ class Zombie(Human):
         print(f"{'> Vida': <15}{self.life}")
         print("-=-"*10)
 
-
-
     def attack(self, enemy):
         oldLife = enemy.getLife()
         enemy.lifeDown(self.dmg)
-        print(f"Você foi atacado pelo zumbi e perdeu {oldLife - enemy.getLife()} pontos de vida.\n")
+        print(
+            f"Você foi atacado pelo zumbi e perdeu {oldLife - enemy.getLife()} pontos de vida.\n")
         if enemy.isInfected == False and choice([True, False]) == True:
             enemy.setInfected()
             print("Você foi infectado! Tome uma dose de Cloropina assim que possível.\n")
-
-# personagem = Survivor(100, 10)
-# personagem.getStatus()
-# zumbi = Zombie(50, 20)
-# i = 0
-# while personagem.isAlive() == True:
-#     i += 1
-#     print(f"Você foi atacado {i}x")
-#     zumbi.attack(personagem)
-#     personagem.attack(zumbi)
-#     print(f"Você: {personagem}")
-#     print(f"Zumbi: {zumbi}")
-#     print("--==")

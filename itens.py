@@ -1,4 +1,4 @@
-class Item:
+class Item:             # classe item genérico
     def __init__(self):
         self.name = ""
         self.value = 0
@@ -8,7 +8,7 @@ class Item:
         return self.name
 
     def setName(self):
-        if self.quantity > 1:  # plural
+        if self.quantity > 1:
             self.name = ""
         else:
             pass

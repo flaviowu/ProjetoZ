@@ -1,7 +1,6 @@
 from random import randint
 
-
-class Market:
+class Market:               # lugar mercado, atribuímos valores nome e nome de item, além de uma quantidade aleatória de itens
     def __init__(self):
         self.name = "Mercado"
         self.item = "Comida"
@@ -49,7 +48,7 @@ class PoliceStation:
         return self.itemQ
 
 
-class Shelter:
+class Shelter:              # abrigo não tem ítens
     def __init__(self):
         self.name = "Abrigo"
 
