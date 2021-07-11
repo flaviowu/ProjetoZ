@@ -113,7 +113,7 @@ class Survivor(Human):                  # subclasse Human que herda parametros e
             dmgMod = self.backpack.pistola.getDmg()
             print(f"Você pegou sua arma, apontou para o zumbi e puxou o gatilho.\n")
             self.backpack.pistola.shot()
-        enemy.lifeDown(self.dmg * dmgMod)
+        enemy.lifeDown(self.getDmg() * dmgMod)
         newLife = enemy.getLife()
         print(f"O zumbi perdeu {oldLife - newLife} pontos de vida\n")
 
